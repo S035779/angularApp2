@@ -151,3 +151,54 @@ angular.module("mainModule5", [])
   $scope.personManagerInstance = personManager;
 });
 
+// Anjular sample code#11
+var PersonManager4 = function ()
+{
+  var fullNameSeparator = " ";
+
+  return {
+    setFullNameSeparator: function (separator)
+    {
+      fullNameSeparator = separator;
+    },
+    $get: function (person)
+    {
+      return {
+        getPersonFirstName: function ()
+        {
+          return person.firstName;
+        },
+        getPersonLastName: function ()
+        {
+          return person.lastName;
+        },
+        getPersonFullName: function ()
+        {
+          return person.firstName + fullNameSeparator + person.lastName;
+        }
+      };
+    }
+  };
+};
+
+angular.module("mainModule6", [])
+.value("person", {
+  firstName: "",
+  lastName: ""
+})
+.provider("personManager", PersonManager4)
+.config(function (personManagerProvider)
+{
+  personManagerProvider.setFullNameSeparator("*");
+})
+.run(function (person)
+{
+  person.firstName = "John";
+  person.lastName = "Doe";
+})
+.controller("mainController", function ($scope, person, personManager)
+{
+  $scope.personInstance = person;
+  $scope.personManagerInstance = personManager;
+});
+

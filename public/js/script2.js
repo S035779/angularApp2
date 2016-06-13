@@ -112,3 +112,42 @@ angular.module("mainModule4", [])
   $scope.personManagerInstance = personManager;
 });
 
+// Angular sample code#10
+var PersonManager3 = function ()
+{
+  return {
+    $get: function (person)
+    {
+      return {
+        getPersonFirstName: function ()
+        {
+          return person.firstName;
+        },
+        getPersonLastName: function ()
+        {
+          return person.lastName;
+        },
+        getPersonFullName: function (separator)
+        {
+          return person.firstName + separator + person.lastName;
+        }
+      };
+    }
+  };
+};
+
+angular.module("mainModule5", [])
+.value("person", 
+{
+  firstName: "",
+  lastName: ""
+})
+.provider("personManager", PersonManager3)
+.controller("mainController", function ($scope, person, personManager)
+{
+  person.firstName = "John";
+  person.lastName = "Doe";
+  $scope.personInstance = person;
+  $scope.personManagerInstance = personManager;
+});
+
